@@ -68,7 +68,7 @@ textarea { min-height: 96px; resize: vertical; }
 
 input:focus, textarea:focus, select:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(255,45,85,0.2); }
 
-.btn {
+.btn, .button {
   appearance: none;
   display: inline-flex;
   align-items: center;
@@ -84,9 +84,12 @@ input:focus, textarea:focus, select:focus { border-color: var(--primary); box-sh
   transition: transform 0.06s ease, background 0.2s ease;
 }
 
-.btn:disabled { opacity: 0.6; cursor: not-allowed; }
-.btn:hover { background: var(--primary-600); }
-.btn:active { transform: translateY(1px); background: var(--primary-700); }
+.btn:disabled, .button:disabled { opacity: 0.6; cursor: not-allowed; }
+.btn:hover, .button:hover { background: var(--primary-600); }
+.btn:active, .button:active { transform: translateY(1px); background: var(--primary-700); }
+
+/* If .button is used on <a> in Webflow, avoid underline */
+.button { text-decoration: none; line-height: 1; }
 
 .btn-secondary {
   background: transparent;

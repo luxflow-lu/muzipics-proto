@@ -257,7 +257,7 @@ export default function HomePage() {
                     setImageUrl(null);
                     setError(null);
                   }}>Réinitialiser</button>
-                  <button className="btn" onClick={onGenerate} disabled={loading || !prompt.trim()}>
+                  <button className="btn button" onClick={onGenerate} disabled={loading || !prompt.trim()}>
                     {loading ? "Génération..." : "Générer"}
                   </button>
                 </div>
@@ -287,7 +287,7 @@ export default function HomePage() {
                                  onChange={(e) => setExportQuality(Number(e.target.value))} />
                         </div>
                       )}
-                      <button className="btn" onClick={handleDownload}>Télécharger</button>
+                      <button className="btn button" onClick={handleDownload}>Télécharger</button>
                     </div>
                   </div>
                   <div className="image-wrap">
