@@ -11,7 +11,7 @@ export default function HomePage() {
   // Simple controls
   const [style, setStyle] = useState<string>("modern"); // maps to model keys
   const [preset, setPreset] = useState<string>("none");
-  const [orientation, setOrientation] = useState<string>("1:1");
+  const [orientation, setOrientation] = useState<string>("1:1"); // 1:1 | 4:5 | 16:9
   const [exportFormat, setExportFormat] = useState<"png" | "jpg" | "webp">("png");
   const [exportQuality, setExportQuality] = useState<number>(0.92);
 
@@ -39,19 +39,7 @@ export default function HomePage() {
     } catch {}
   }, [history]);
 
-  function styleToModel(key: string): string {
-    switch (key) {
-      case "artistic":
-        return "dreamshaper-xl"; // Lykon/dreamshaper-xl-v2
-      case "realistic":
-        return "realvis-xl"; // SG161222/RealVisXL_V4.0
-      case "fast":
-        return "sdxl-turbo"; // stabilityai/sdxl-turbo
-      case "modern":
-      default:
-        return "sdxl-base"; // stabilityai/stable-diffusion-xl-base-1.0
-    }
-  }
+  // style is kept for UI presets; API uses a single SD 3.5 model server-side
 
   // Style and prompt presets
   const STYLE_PROMPTS: Record<string, string> = {
@@ -89,11 +77,10 @@ export default function HomePage() {
     return parts.filter(Boolean).join(", ");
   }
 
-  function getDims(orient: string): { width: number; height: number } {
-    // Use safe fixed sizes compatible with HF limits; API re-clamps/rounds
-    if (orient === "16:9") return { width: 1280, height: 720 };
-    if (orient === "9:16") return { width: 720, height: 1280 };
-    return { width: 1024, height: 1024 };
+  function getAspect(orient: string): "1:1" | "4:5" | "16:9" {
+    if (orient === "4:5") return "4:5";
+    if (orient === "16:9") return "16:9";
+    return "1:1";
   }
 
   const onGenerate = async () => {
@@ -106,14 +93,14 @@ export default function HomePage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: (() => {
-          const dims = getDims(orientation);
           const finalPrompt = buildPrompt(prompt, preset, style);
           const payload = {
             prompt: finalPrompt,
-            model: styleToModel(style),
-            width: dims.width,
-            height: dims.height,
-          };
+            aspect: getAspect(orientation),
+            steps: 36,
+            guidance_scale: 4.0,
+            seed: Math.floor(Math.random() * 10_000_000),
+          } as const;
           return JSON.stringify(payload);
         })(),
       });
@@ -225,8 +212,8 @@ export default function HomePage() {
                   <label>Orientation</label>
                   <select value={orientation} onChange={(e) => setOrientation(e.target.value)}>
                     <option value="1:1">1:1 (Carré)</option>
+                    <option value="4:5">4:5 (Portrait)</option>
                     <option value="16:9">16:9 (Paysage)</option>
-                    <option value="9:16">9:16 (Portrait)</option>
                   </select>
                 </div>
                 <div className="col">
