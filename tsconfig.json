@@ -10,7 +10,9 @@
     "moduleResolution": "Bundler",
     "strict": true,
     "baseUrl": ".",
-    "paths": {},
+    "paths": {
+      "@/*": ["*"]
+    },
     "allowJs": true,
     "noEmit": true,
     "esModuleInterop": true,
