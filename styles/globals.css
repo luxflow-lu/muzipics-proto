@@ -8,7 +8,7 @@ html, body {
 }
 
 :root {
-  --bg: #0b0b0c;
+  --bg: transparent;
   --panel: #131316;
   --panel-2: #18181b;
   --border: #27272a;
