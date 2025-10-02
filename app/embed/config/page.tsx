@@ -101,15 +101,17 @@ export default function EmbedConfig() {
   return (
     <div className="embed" style={{ width: "100%", height: "100%" }}>
       <style jsx global>{`
-        html, body, .embed { height: 100%; }
-        .embed .container { width: 100% !important; padding: 0 !important; margin: 0 !important; }
-        .embed main { min-height: 100%; }
-        /* Ultra-flat: no cards/borders/shadows, compact spacing */
-        .embed .card { background: transparent !important; border: 0 !important; box-shadow: none !important; padding: 0 !important; }
+        /* Fill and be transparent to let Webflow wrapper styles show through */
+        html, body, #__next, .embed { height: 100%; margin: 0; background: transparent !important; }
+        .embed main, .embed .container { height: 100%; width: 100% !important; padding: 0 !important; margin: 0 !important; background: transparent !important; }
+        /* Ultra-flat: remove any chrome and extra spacing */
+        .embed .card { background: transparent !important; border: 0 !important; box-shadow: none !important; padding: 0 !important; margin: 0 !important; }
         .embed .grid { gap: 10px !important; }
         .embed .row { gap: 8px !important; }
         .embed label { font-size: 12px; color: #9ca3af; }
         .embed textarea, .embed select, .embed input[type="text"] { width: 100%; }
+        /* Reset default margins from any elements */
+        .embed h1, .embed h2, .embed h3, .embed p { margin: 0 !important; }
       `}</style>
       <main>
         <div className="container">

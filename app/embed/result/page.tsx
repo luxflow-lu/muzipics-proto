@@ -60,13 +60,13 @@ export default function EmbedResult() {
   return (
     <div className="embed" style={{ width: "100%", height: "100%" }}>
       <style jsx global>{`
-        html, body, .embed { height: 100%; }
-        .embed .container { width: 100% !important; padding: 0 !important; margin: 0 !important; }
-        .embed main { min-height: 100%; }
-        /* Ultra-flat */
-        .embed .card { background: transparent !important; border: 0 !important; box-shadow: none !important; padding: 0 !important; }
+        /* Fill and be transparent to let Webflow wrapper styles show through */
+        html, body, #__next, .embed { height: 100%; margin: 0; background: transparent !important; }
+        .embed main, .embed .container { height: 100%; width: 100% !important; padding: 0 !important; margin: 0 !important; background: transparent !important; }
+        /* Ultra-flat: remove any chrome */
+        .embed .card { background: transparent !important; border: 0 !important; box-shadow: none !important; padding: 0 !important; margin: 0 !important; }
         .embed .row { gap: 8px !important; }
-        .embed .image-wrap { border-radius: 0 !important; overflow: visible !important; }
+        .embed .image-wrap { border-radius: 0 !important; overflow: visible !important; background: transparent !important; }
         .embed img { display: block; width: 100%; height: auto; }
       `}</style>
       <main>
